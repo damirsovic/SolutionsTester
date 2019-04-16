@@ -5,14 +5,14 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import com.example.damirsovic.solutionstester.sensor.RotationSensorObservable
+import com.example.damirsovic.solutionstester.timer.TimeoutCounter
+import com.example.damirsovic.solutionstester.timer.TimeoutEventListener
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
-import java.util.concurrent.TimeUnit
-import io.reactivex.android.schedulers.AndroidSchedulers
 import kotlinx.android.synthetic.main.activity_main.*
-import com.example.damirsovic.solutionstester.timer.TimeoutCounter
-import com.example.damirsovic.solutionstester.timer.TimeoutEventListener
+import java.util.concurrent.TimeUnit
 
 
 class MainActivity : AppCompatActivity() {
@@ -31,7 +31,26 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         timeoutCounter = TimeoutCounter(1000, TimeUnit.MILLISECONDS,timerEnd())
-        rotationObservable = RotationSensorObservable(this).sensorEventObservable(500).subscribe()
+        rotationObservable = RotationSensorObservable(this, 6)
+            .sensorEventObservable(500)
+            .buffer(3)
+            .subscribe(
+                { next ->
+                    for (i in 0..(next.size - 1)) {
+                        val strBuffer = StringBuffer()
+                        strBuffer.append("Values ").append(i).append(": ")
+                        for (j in 0..(next[i].values.size - 1)) {
+                            strBuffer.append(next[i].values.get(j)).append(", ")
+                        }
+                        Log.d("Rotation", strBuffer.toString())
+                    }
+                },
+                { error ->
+                    Log.e("Rotation", error.message)
+                    error.printStackTrace()
+                }
+            )
+
         source
             .buffer(
                 source.debounce(400, TimeUnit.MILLISECONDS)
