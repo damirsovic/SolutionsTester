@@ -1,9 +1,11 @@
 package com.example.damirsovic.solutionstester
 
+import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
+import com.example.damirsovic.solutionstester.books.BooksActivity
 import com.example.damirsovic.solutionstester.sensor.RotationSensorObservable
 import com.example.damirsovic.solutionstester.timer.TimeoutCounter
 import com.example.damirsovic.solutionstester.timer.TimeoutEventListener
@@ -22,6 +24,7 @@ class MainActivity : AppCompatActivity() {
     private val source = PublishSubject.create<Boolean>()
     private var timeoutCounter: TimeoutCounter? = null
     private var count : Int = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -70,7 +73,7 @@ class MainActivity : AppCompatActivity() {
         timeoutCounter?.stop()
     }
 
-    fun countClicks(view : View){
+    fun clickDispatcher(view: View) {
         Log.d("CounterTest", "Pressed button " + view.id)
         if(view.id == R.id.btnTrue)
             source.onNext(true)
@@ -80,6 +83,10 @@ class MainActivity : AppCompatActivity() {
             txtLabel.text = "Pressed ${++count} times"
             Log.d ("CounterTest",  "Pressed $count times")
             timeoutCounter?.process()
+        }
+        if (view.id == R.id.btnBooks) {
+            val intent = Intent(this, BooksActivity::class.java)
+            startActivity(intent)
         }
     }
 

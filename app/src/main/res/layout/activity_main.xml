@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/btnTrue" android:layout_marginTop="64dp"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-            android:onClick="countClicks"
+            android:onClick="clickDispatcher"
             app:layout_constraintEnd_toStartOf="@+id/btnFalse"/>
     <Button
             android:text="@string/value_false"
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/btnFalse" app:layout_constraintStart_toEndOf="@+id/btnTrue"
             app:layout_constraintTop_toTopOf="@+id/btnTrue" app:layout_constraintBottom_toBottomOf="@+id/btnTrue"
-            android:onClick="countClicks" app:layout_constraintVertical_bias="0.0"
+            android:onClick="clickDispatcher" app:layout_constraintVertical_bias="0.0"
             app:layout_constraintEnd_toStartOf="@+id/btnStart"
     />
     <Button
@@ -39,8 +39,13 @@
             android:id="@+id/btnStart" app:layout_constraintStart_toEndOf="@+id/btnFalse"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/btnFalse" app:layout_constraintBottom_toBottomOf="@+id/btnFalse"
-            android:onClick="countClicks"/>
+            android:onClick="clickDispatcher"/>
     <android.support.constraint.Group android:layout_width="wrap_content" android:layout_height="wrap_content"
                                       android:id="@+id/group"/>
+    <Button
+            android:text="Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" tools:layout_editor_absoluteY="666dp"
+            tools:layout_editor_absoluteX="36dp" android:id="@+id/btnBooks" android:onClick="clickDispatcher"/>
 
 </android.support.constraint.ConstraintLayout>

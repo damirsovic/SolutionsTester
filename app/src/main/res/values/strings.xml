@@ -3,4 +3,5 @@
     <string name="value_true">True</string>
     <string name="value_false">False</string>
     <string name="start_timeout">Start timeout</string>
+    <string name="books">Books</string>
 </resources>
